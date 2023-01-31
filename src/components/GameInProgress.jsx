@@ -8,6 +8,7 @@ function GameInProgress(props) {
     props.setQuestionsList([]);
     setCurrentScore(0);
     setIsGameEnded(false);
+    props.setDifficulty("");
   }
 
   function returnHome() {

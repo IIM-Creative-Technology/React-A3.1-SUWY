@@ -16,6 +16,7 @@ function QuestionsAnswers(props) {
     const shuffledAnwsers = shuffleAnwsers(actualAnwsers);
     setCurrentAnswers(shuffledAnwsers);
     setCurrentGoodAnwser(actualGoodAnwser);
+    console.log(props.questionsList[currentQuestionIndex].difficulty);
     //console.log(actualGoodAnwser);
   }, [currentQuestionIndex, props.questionsList]);
 
