@@ -11,6 +11,7 @@ function Game() {
     getQuestionsData();
   }, [isGameStarted]);
 
+  
   async function getQuestionsData() {
     const questionsData = await getQuestions();
     setQuestionsList(questionsData);
