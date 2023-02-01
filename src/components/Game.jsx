@@ -4,11 +4,13 @@ import GameInProgress from "./GameInProgress";
 import { useState, useEffect } from "react";
 import ChooseDifficulty from "./ChooseDifficulty";
 import ChooseCategory from "./ChooseCategory";
+
 function Game() {
   const [questionsList, setQuestionsList] = useState([]);
   const [isGameStarted, setIsGameStarted] = useState(false);
   const [difficulty, setDifficulty] = useState("");
   const [category, setCategory] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
   const QUESTIONS_AMOUNT = 10;
 
@@ -18,6 +20,7 @@ function Game() {
   }, [difficulty]);
 
   async function getQuestionsData() {
+    setIsLoading(true);
     let paramCategory = category ? `&category=${category}` : "";
     const responseData = await getOpendtdbApiData(
       `/api.php?amount=${QUESTIONS_AMOUNT}${paramCategory}&difficulty=${difficulty}`
@@ -36,16 +39,23 @@ function Game() {
       };
       return questionSanitized;
     });
-
     setQuestionsList(questionsDataSanitized);
+    setIsLoading(false);
   }
 
   function sanitiseString(string) {
-    return string.replace(/&quot;/g, '"').replace(/&#039;/g, "'");
+    return string
+      .replace(/&quot;/g, '"')
+      .replace(/&#039;/g, "'")
+      .replace(/&ldquo/, '"')
+      .replace(/&rdquo/, '"')
+      .replace(/&rsquo/, "'")
+      .replace(/&amp;/g, "&")
+      .replace(/&eacute;/g, "é");
   }
 
   return (
-    <div className="Game mx-auto container flex flex-col items-center justify-center mt-10">
+    <div className="Game relative mx-auto container flex flex-col items-center justify-center mt-10">
       <h1 className="font-bold mb-4 text-5xl">Quizz</h1>
       {!isGameStarted && (
         <StartGame
@@ -53,25 +63,31 @@ function Game() {
           QUESTIONS_AMOUNT={QUESTIONS_AMOUNT}
         />
       )}
-      {isGameStarted &&
-        category === "" &&
-        questionsList.length === 0 &&
-        difficulty === "" && <ChooseCategory setCategory={setCategory} />}
-
-      {isGameStarted &&
-        questionsList.length === 0 &&
-        category != "" &&
-        difficulty === "" && <ChooseDifficulty setDifficulty={setDifficulty} />}
-      {isGameStarted && questionsList.length > 0 && difficulty != "" && (
-        <GameInProgress
-          setDifficulty={setDifficulty}
-          questionsList={questionsList}
-          setIsGameStarted={setIsGameStarted}
-          setQuestionsList={setQuestionsList}
-          getQuestionsData={getQuestionsData}
+      {isGameStarted && category == "" && (
+        <ChooseCategory
           setCategory={setCategory}
+          isLoading={isLoading}
+          setIsLoading={setIsLoading}
         />
       )}
+      {isGameStarted && category != "" && difficulty == "" && (
+        <ChooseDifficulty setDifficulty={setDifficulty} />
+      )}
+      {isGameStarted &&
+        difficulty != "" &&
+        (questionsList.length > 0 ? (
+          <GameInProgress
+            setDifficulty={setDifficulty}
+            questionsList={questionsList}
+            setIsGameStarted={setIsGameStarted}
+            setQuestionsList={setQuestionsList}
+            getQuestionsData={getQuestionsData}
+            setCategory={setCategory}
+            isLoading={isLoading}
+          />
+        ) : (
+          <img className="w-16 h-16" src="/loading.gif" />
+        ))}
     </div>
   );
 }

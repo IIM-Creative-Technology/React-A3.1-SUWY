@@ -30,6 +30,7 @@ function GameInProgress(props) {
           currentScore={currentScore}
           setIsGameEnded={setIsGameEnded}
           questionsList={props.questionsList}
+          isLoading={props.isLoading}
         />
       ) : (
         <div>

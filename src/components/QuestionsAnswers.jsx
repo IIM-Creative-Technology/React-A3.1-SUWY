@@ -16,8 +16,6 @@ function QuestionsAnswers(props) {
     const shuffledAnwsers = shuffleAnwsers(actualAnwsers);
     setCurrentAnswers(shuffledAnwsers);
     setCurrentGoodAnwser(actualGoodAnwser);
-    console.log(props.questionsList[currentQuestionIndex].difficulty);
-    //console.log(actualGoodAnwser);
   }, [currentQuestionIndex, props.questionsList]);
 
   function nextQuestion() {
@@ -54,6 +52,7 @@ function QuestionsAnswers(props) {
 
   return (
     <div className="QuestionsAnswers w-full">
+      <p>Question: {currentQuestionIndex + 1}</p>
       <p className="font-bold text-2xl mb-4 text-center">
         {props.questionsList[currentQuestionIndex].question}
       </p>
