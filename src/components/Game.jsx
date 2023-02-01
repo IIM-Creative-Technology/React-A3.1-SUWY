@@ -12,7 +12,7 @@ function Game() {
   const [category, setCategory] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
-  const QUESTIONS_AMOUNT = 10;
+  const QUESTIONS_AMOUNT = 3;
 
   useEffect(() => {
     if (!difficulty && !category) return;
