@@ -53,48 +53,58 @@ function QuestionsAnswers(props) {
   }
 
   return (
-    <div className="QuestionsAnswers">
-      <p>{props.questionsList[currentQuestionIndex].question}</p>
+    <div className="QuestionsAnswers w-full">
+      <p className="font-bold text-2xl mb-4 text-center">
+        {props.questionsList[currentQuestionIndex].question}
+      </p>
 
-      {currentAnswers.map((answer, index) => {
-        // questions
-        return (
-          <button
-            disabled={isAnswerClicked}
-            onClick={() => {
-              verifyAnwser(answer);
-            }}
-            key={index}
-          >
-            {answer}
-          </button>
-        );
-      })}
-
-      {isAnswerClicked && // result
-        (isAnswerCorrect ? (
-          <p className="text-green-500">Congratulations !</p>
-        ) : (
-          <p className="text-red-500">
-            Wrong ! The good answer was {currentGoodAnwser}
-          </p>
-        ))}
-      {isAnswerClicked && // button next
-        currentQuestionIndex < props.questionsList.length && (
-          <button
-            onClick={() => {
-              if (currentQuestionIndex === props.questionsList.length - 1) {
-                props.setIsGameEnded(true);
-              } else {
-                nextQuestion();
-              }
-            }}
-          >
-            {currentQuestionIndex === props.questionsList.length - 1
-              ? "End"
-              : "Next"}
-          </button>
-        )}
+      <div className="flex w-full justify-center">
+        {currentAnswers.map((answer, index) => {
+          // questions
+          return (
+            <button
+              className="m-2"
+              disabled={isAnswerClicked}
+              onClick={() => {
+                verifyAnwser(answer);
+              }}
+              key={index}
+            >
+              {answer}
+            </button>
+          );
+        })}
+      </div>
+      <div className="w-full flex flex-col items-center justify-center mt-8">
+        <div className="mb-4 font-medium text-xl">
+          {isAnswerClicked && // result
+            (isAnswerCorrect ? (
+              <p className="text-green-500">Congratulations !</p>
+            ) : (
+              <p className="text-red-500">
+                Wrong ! The good answer was {currentGoodAnwser}
+              </p>
+            ))}
+        </div>
+        <div>
+          {isAnswerClicked && // button next
+            currentQuestionIndex < props.questionsList.length && (
+              <button
+                onClick={() => {
+                  if (currentQuestionIndex === props.questionsList.length - 1) {
+                    props.setIsGameEnded(true);
+                  } else {
+                    nextQuestion();
+                  }
+                }}
+              >
+                {currentQuestionIndex === props.questionsList.length - 1
+                  ? "End"
+                  : "Next"}
+              </button>
+            )}
+        </div>
+      </div>
     </div>
   );
 }

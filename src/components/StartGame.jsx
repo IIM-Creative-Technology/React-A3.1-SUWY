@@ -1,8 +1,8 @@
 function StartGame(props) {
   return (
-    <div className="StartGame">
-      <p>
-        Welcome to the SUWY Quizz, <br /> You'll have to answer 15 questions.
+    <div className="StartGame flex flex-col items-center justify-center text-center">
+      <p className="mb-8 text-xl font-medium">
+        Welcome to the SUWY Quizz, <br /> You'll have to answer {props.QUESTIONS_AMOUNT} questions.
       </p>
       <button
         onClick={() => {

@@ -8,7 +8,6 @@ function GameInProgress(props) {
     props.setQuestionsList([]);
     setCurrentScore(0);
     setIsGameEnded(false);
-    
   }
 
   function returnHome() {
@@ -21,7 +20,6 @@ function GameInProgress(props) {
   function restartGame() {
     resetData();
     props.getQuestionsData();
-
   }
 
   return (
@@ -35,12 +33,20 @@ function GameInProgress(props) {
         />
       ) : (
         <div>
-          <p>Tu as repondu a toutes les questions GG</p>
-          <p>
-            Your score is: {currentScore} / {props.questionsList.length}
-          </p>
-          <button onClick={() => returnHome()}>Home</button>
-          <button onClick={() => restartGame()}>Restart</button>
+          <div className="font-bold text-2xl mb-4 text-center">
+            <p>Quizz is finished !</p>
+            <p>
+              Your score is: {currentScore} / {props.questionsList.length}
+            </p>
+          </div>
+          <div className="flex justify-center">
+            <button className="m-2" onClick={() => returnHome()}>
+              Home
+            </button>
+            <button className="m-2" onClick={() => restartGame()}>
+              Restart
+            </button>
+          </div>
         </div>
       )}
     </div>
