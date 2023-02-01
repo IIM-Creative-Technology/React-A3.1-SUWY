@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import QuestionsAnswers from "./QuestionsAnswers";
 function GameInProgress(props) {
   const [currentScore, setCurrentScore] = useState(0);
@@ -8,17 +8,20 @@ function GameInProgress(props) {
     props.setQuestionsList([]);
     setCurrentScore(0);
     setIsGameEnded(false);
-    props.setDifficulty("");
+    
   }
 
   function returnHome() {
     resetData();
+    props.setDifficulty("");
+    props.setCategory("");
     props.setIsGameStarted(false);
   }
 
   function restartGame() {
     resetData();
     props.getQuestionsData();
+
   }
 
   return (
