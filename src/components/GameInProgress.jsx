@@ -11,7 +11,7 @@ function GameInProgress(props) {
     props.reset();
   }
 
-  function returnHome() {
+  function returnQuizz() {
     resetData();
     props.setDifficulty("");
     props.setCategory("");
@@ -48,8 +48,8 @@ function GameInProgress(props) {
             </p>
           </div>
           <div className="flex justify-center">
-            <button className="m-2" onClick={() => returnHome()}>
-              Home
+            <button className="m-2" onClick={() => returnQuizz()}>
+              Quizz
             </button>
             <button className="m-2" onClick={() => restartGame()}>
               Restart
