@@ -1,4 +1,5 @@
 import { getOpendtdbApiData } from "../api/get-opendtdb-api-data";
+import { useStopwatch } from 'react-timer-hook';
 import StartGame from "./StartGame";
 import GameInProgress from "./GameInProgress";
 import { useState, useEffect } from "react";
@@ -11,6 +12,7 @@ function Game() {
   const [difficulty, setDifficulty] = useState("");
   const [category, setCategory] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const {minutes, seconds, start, pause, reset} = useStopwatch({ autoStart: false });
 
   const QUESTIONS_AMOUNT = 3;
 
@@ -40,6 +42,7 @@ function Game() {
       return questionSanitized;
     });
     setQuestionsList(questionsDataSanitized);
+    start();
     setIsLoading(false);
   }
 
@@ -52,6 +55,16 @@ function Game() {
       .replace(/&rsquo/, "'")
       .replace(/&amp;/g, "&")
       .replace(/&eacute;/g, "é");
+  }
+  
+  function displayTime(minutes, seconds) {
+    if (minutes < 10) {
+      minutes = "0" + minutes;
+    }
+    if (seconds < 10) {
+      seconds = "0" + seconds;
+    }
+    return minutes + ":" + seconds;
   }
 
   return (
@@ -76,6 +89,8 @@ function Game() {
       {isGameStarted &&
         difficulty != "" &&
         (questionsList.length > 0 ? (
+        <div className="text-center">
+          <p className="text-2xl font-bold mb-4">{displayTime(minutes, seconds)}</p>
           <GameInProgress
             setDifficulty={setDifficulty}
             questionsList={questionsList}
@@ -84,7 +99,10 @@ function Game() {
             getQuestionsData={getQuestionsData}
             setCategory={setCategory}
             isLoading={isLoading}
+            pause={pause}
+            reset={reset}
           />
+        </div>
         ) : (
           <img className="w-16 h-16" src="/loading.gif" />
         ))}
