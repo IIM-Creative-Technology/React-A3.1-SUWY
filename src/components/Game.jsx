@@ -1,5 +1,5 @@
 import { getOpendtdbApiData } from "../api/get-opendtdb-api-data";
-import { useStopwatch } from 'react-timer-hook';
+import { useStopwatch } from "react-timer-hook";
 import StartGame from "./StartGame";
 import GameInProgress from "./GameInProgress";
 import { useState, useEffect } from "react";
@@ -12,9 +12,11 @@ function Game() {
   const [difficulty, setDifficulty] = useState("");
   const [category, setCategory] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-  const {minutes, seconds, start, pause, reset} = useStopwatch({ autoStart: false });
+  const { minutes, seconds, start, pause, reset } = useStopwatch({
+    autoStart: false,
+  });
 
-  const QUESTIONS_AMOUNT = 3;
+  const QUESTIONS_AMOUNT = import.meta.env.VITE_QUESTIONS_AMOUNT || 10;
 
   useEffect(() => {
     if (!difficulty && !category) return;
@@ -56,7 +58,7 @@ function Game() {
       .replace(/&amp;/g, "&")
       .replace(/&eacute;/g, "é");
   }
-  
+
   function displayTime(minutes, seconds) {
     if (minutes < 10) {
       minutes = "0" + minutes;
@@ -89,20 +91,22 @@ function Game() {
       {isGameStarted &&
         difficulty != "" &&
         (questionsList.length > 0 ? (
-        <div className="text-center">
-          <p className="text-2xl font-bold mb-4">{displayTime(minutes, seconds)}</p>
-          <GameInProgress
-            setDifficulty={setDifficulty}
-            questionsList={questionsList}
-            setIsGameStarted={setIsGameStarted}
-            setQuestionsList={setQuestionsList}
-            getQuestionsData={getQuestionsData}
-            setCategory={setCategory}
-            isLoading={isLoading}
-            pause={pause}
-            reset={reset}
-          />
-        </div>
+          <div className="text-center">
+            <p className="text-2xl font-bold mb-4">
+              {displayTime(minutes, seconds)}
+            </p>
+            <GameInProgress
+              setDifficulty={setDifficulty}
+              questionsList={questionsList}
+              setIsGameStarted={setIsGameStarted}
+              setQuestionsList={setQuestionsList}
+              getQuestionsData={getQuestionsData}
+              setCategory={setCategory}
+              isLoading={isLoading}
+              pause={pause}
+              reset={reset}
+            />
+          </div>
         ) : (
           <img className="w-16 h-16" src="/loading.gif" />
         ))}
