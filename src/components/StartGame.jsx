@@ -1,3 +1,5 @@
+import {Link} from 'react-router-dom';
+
 function StartGame(props) {
   return (
     <div className="StartGame flex flex-col items-center justify-center text-center">
@@ -11,6 +13,9 @@ function StartGame(props) {
       >
         Start the game
       </button>
+      <Link to="/" className='absolute top-0 left-10'>
+        Home
+      </Link>
     </div>
   );
 }
